@@ -5,11 +5,18 @@ const profile = require('./routes/api/profile');
 const posts = require('./routes/api/posts');
 const app = express();
 
+const bodyParser = require('body-parser')
+
 const db = require('./config/keys').mongoURI;
 mongoose
 .connect(db)
 .then(() => console.log('MongoDb connected'))
 .catch(err => console.log(err));
+
+//Body parser middleware(configuration)
+app.use(bodyParser.urlencoded({extended: false}
+));
+app.use(bodyParser.json());
 
 //Let's write our first route
 app.get('/', (req, res) => res.send('Hello world'));
