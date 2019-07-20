@@ -58,6 +58,7 @@ router.get('/all', (req, res) => {
 // @access  Public
 
 router.get('/handle/:handle', (req, res) => {
+  //':handle' refers to whatever user types as handle parameter that they search for
   const errors = {};
 
   Profile.findOne({ handle: req.params.handle })
@@ -151,7 +152,7 @@ router.post(
         Profile.findOne({ handle: profileFields.handle })
         .then(profile => {
           if (profile) {
-            errors.handle = 'That handle already exists';
+            errors.handle = 'That handle already exzists';
             res.status(400).json(errors);
           }
          // Save Profile
@@ -253,9 +254,9 @@ router.delete(
           // Return any errors with 404 status
           return res.status(404).json(errors);         
         }
-        // Splice out of array
+        // Splice out of array, removes one element at removeIndex
         profile.experience.splice(removeIndex, 1);
-
+        
         // Save
         profile.save().then(profile => res.json(profile));
       })
