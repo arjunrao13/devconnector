@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import axios from 'axios';
 import classnames from 'classnames';
+import {loginUser} from '../../actions/authActions';
+import {connect} from 'react-redux';
 
 class Login extends Component {
 
@@ -29,11 +30,8 @@ class Login extends Component {
 
         };
 
-        axios
-            .post('/api/users/login', newUser)
-            .then(res => console.log(res.data))
-            .catch(err => this.setState({errors: err.response.data}));
-
+        this.props.loginUser(newUser); //hooks up ui to reducers
+        
     }
 
 
@@ -77,4 +75,9 @@ class Login extends Component {
 }
 
 
-export default Login;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+  errors: state.errors
+})
+
+export default connect(mapStateToProps, {loginUser})(Login);
